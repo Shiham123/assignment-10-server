@@ -30,6 +30,21 @@ app.get('/', async (request, response) => {
 const run = async () => {
   try {
     await client.connect();
+    const itemsDatabase = client.db('itemsDB');
+    const itemsCollections = itemsDatabase.collection('items');
+
+    app.get('/items', async (request, response) => {
+      const cursor = itemsCollections.find();
+      const result = await cursor.toArray();
+      response.send(result);
+    });
+
+    app.post('/items', async (request, response) => {
+      const newItem = request.body;
+      const result = await itemsCollections.insertOne(newItem);
+      response.send(result);
+    });
+
     await client.db('admin').command({ ping: 1 });
     console.log('You successfully connected to MongoDB!');
   } catch (error) {
