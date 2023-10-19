@@ -51,6 +51,13 @@ const run = async () => {
       response.json(result);
     });
 
+    app.get('/items/id/:id', async (request, response) => {
+      const id = request.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await itemsCollections.findOne(query);
+      response.send(result);
+    });
+
     app.get('/itemDetails/:id', async (request, response) => {
       const id = request.params.id;
       const query = { _id: new ObjectId(id) };
