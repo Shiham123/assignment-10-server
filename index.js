@@ -33,6 +33,10 @@ const run = async () => {
     const itemsDatabase = client.db('itemsDB');
     const itemsCollections = itemsDatabase.collection('items');
 
+    // second database
+    const cartDatabase = client.db('cartDB');
+    const cartCollections = cartDatabase.collection('perCart');
+
     app.get('/items', async (request, response) => {
       const cursor = itemsCollections.find();
       const result = await cursor.toArray();
@@ -57,6 +61,20 @@ const run = async () => {
     app.post('/items', async (request, response) => {
       const newItem = request.body;
       const result = await itemsCollections.insertOne(newItem);
+      response.send(result);
+    });
+
+    // second data base post method
+
+    app.get('/cart', async (request, response) => {
+      const cursor = cartCollections.find();
+      const result = await cursor.toArray();
+      response.send(result);
+    });
+
+    app.post('/cart', async (request, response) => {
+      const newCart = request.body;
+      const result = await cartCollections.insertOne(newCart);
       response.send(result);
     });
 
