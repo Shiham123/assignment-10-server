@@ -39,6 +39,14 @@ const run = async () => {
       response.send(result);
     });
 
+    app.get('/items/:name', async (request, response) => {
+      const name = request.params.name;
+      const query = { brand: name };
+      const cursor = itemsCollections.find(query);
+      const result = await cursor.toArray();
+      response.json(result);
+    });
+
     app.post('/items', async (request, response) => {
       const newItem = request.body;
       const result = await itemsCollections.insertOne(newItem);
