@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app = express();
 
@@ -45,6 +45,13 @@ const run = async () => {
       const cursor = itemsCollections.find(query);
       const result = await cursor.toArray();
       response.json(result);
+    });
+
+    app.get('/itemDetails/:id', async (request, response) => {
+      const id = request.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await itemsCollections.findOne(query);
+      response.send(result);
     });
 
     app.post('/items', async (request, response) => {
