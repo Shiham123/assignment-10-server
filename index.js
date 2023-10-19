@@ -58,6 +58,19 @@ const run = async () => {
       response.send(result);
     });
 
+    app.put('/items/id/:id', async (request, response) => {
+      const id = request.params.id;
+      const query = { _id: new ObjectId(id) };
+
+      const updateData = {
+        $set: {
+          name: request.body.name,
+        },
+      };
+      const result = await itemsCollections.updateOne(query, updateData);
+      response.send(result);
+    });
+
     app.get('/itemDetails/:id', async (request, response) => {
       const id = request.params.id;
       const query = { _id: new ObjectId(id) };
