@@ -65,6 +65,11 @@ const run = async () => {
       const updateData = {
         $set: {
           name: request.body.name,
+          url: request.body.url,
+          type: request.body.type,
+          rating: request.body.rating,
+          brand: request.body.brand,
+          price: request.body.price,
         },
       };
       const result = await itemsCollections.updateOne(query, updateData);
