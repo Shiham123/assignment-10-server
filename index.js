@@ -29,7 +29,7 @@ app.get('/', async (request, response) => {
 
 const run = async () => {
   try {
-    await client.connect();
+    // await client.connect();
     const itemsDatabase = client.db('itemsDB');
     const itemsCollections = itemsDatabase.collection('items');
 
